@@ -179,13 +179,26 @@ function removeFolder(folderId){
 
 // REMOVE FOLDER FUNCTION END
 
+// PARENT FOLDER FUNCTION START
+
+function parentFolderOf(id){
+  const folder = folders.find((el) => el.files.find((file) => file.id === Number(id)));
+  if (!folder) {
+    throw "Folder not found";
+  }
+  return folder.id;
+}
+
+// PARENT FOLDER FUNCTION END
+
 // TRY CATCH BLOCK START
 
 try {
   console.log(move(18, 6));
   console.log(copy(18, 7));
   console.log(remove(17));
-  console.log(removeFolder(6));
+  console.log(removeFolder(5));
+  console.log(parentFolderOf(18));
 } catch (err) {
   console.log(err);
 }
