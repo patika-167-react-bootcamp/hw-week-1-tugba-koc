@@ -33,11 +33,13 @@ folders.forEach(function (el) {
   }
 });
 
+// MOVE FUNCTION START
+
 function move(id, newFolderId) {
   // find based folder in folders
   const basedFolder = folders.find(function (folder) {
     if (folder.files) {
-      return folder.files.find((file) => file.id == id);
+      return folder.files.find((file) => file.id === Number(id));
     }
   });
 
@@ -58,7 +60,7 @@ function move(id, newFolderId) {
     throw "Target folder not found";
   } else if (!index) {
     throw "File not found";
-  } else if(basedFolder.id === targetFolder.id){
+  } else if (basedFolder.id === targetFolder.id) {
     throw "Target folder is same as based folder";
   }
 
@@ -83,11 +85,68 @@ function move(id, newFolderId) {
   return folders;
 }
 
+// MOVE FUNCTION END
+
+// COPY FUNCTION START
+
+function copy(id, newFolderId) {
+  // find based folder in folders
+  const basedFolder = folders.find(function (folder) {
+    if (folder.files) {
+      return folder.files.find((file) => file.id === Number(id));
+    }
+  });
+
+  // find index file in based folder
+  let index;
+  basedFolder &&
+    (index = basedFolder.files.findIndex((el) => el.id === Number(id)));
+
+  // find target folder in folders
+  const targetFolder = folders.find(
+    (folder) => folder.id === Number(newFolderId)
+  );
+
+  // if target folder or based folder is not found
+  if (!index && !targetFolder) {
+    throw "Target folder and file not found";
+  } else if (!targetFolder) {
+    throw "Target folder not found";
+  } else if (!index) {
+    throw "File not found";
+  } else if (basedFolder.id === targetFolder.id) {
+    throw "Target folder is same as based folder";
+  }
+
+  // find move file
+  let passedFile = basedFolder.files[index];
+
+  // change file id
+  maxId++;
+  passedFile.id = Number(maxId);
+
+  // create array of files in target folder if not exist
+  if (!Object.keys(targetFolder).includes("files")) {
+    targetFolder.files = [];
+  }
+
+  // add file to target folder
+  targetFolder.files.push(passedFile);
+
+  return folders;
+}
+
+// COPY FUNCTION END
+
+
+
+// TRY CATCH BLOCK START
+
 try {
   console.log(move(18, 6));
-
-  console.log(maxId);
-  
+  console.log(copy(18, 7));
 } catch (err) {
   console.log(err);
 }
+
+// TRY CATCH BLOCK END
