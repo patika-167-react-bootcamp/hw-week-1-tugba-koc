@@ -138,13 +138,40 @@ function copy(id, newFolderId) {
 
 // COPY FUNCTION END
 
+// REMOVE FUNCTION START
 
+function remove(id) {
+  // find based folder in folders
+  const basedFolder = folders.find(function (folder) {
+    if (folder.files) {
+      return folder.files.find((file) => file.id === Number(id));
+    }
+  });
+
+  // find index file in based folder
+  let index;
+  basedFolder &&
+    (index = basedFolder.files.findIndex((el) => el.id === Number(id)));
+
+  // if target folder or based folder is not found
+  if (index < 0) {
+    throw "File not found";
+  }
+
+  // remove file from based folder
+  basedFolder.files.splice(index, 1);
+
+  return folders;
+}
+
+// REMOVE FUNCTION END
 
 // TRY CATCH BLOCK START
 
 try {
   console.log(move(18, 6));
   console.log(copy(18, 7));
+  console.log(remove(17));
 } catch (err) {
   console.log(err);
 }
