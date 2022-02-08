@@ -166,12 +166,26 @@ function remove(id) {
 
 // REMOVE FUNCTION END
 
+// REMOVE FOLDER FUNCTION START
+
+function removeFolder(folderId){
+  const index = folders.findIndex((el) => el.id === Number(folderId));
+  if (index < 0) {
+    throw "Folder not found";
+  }
+  folders.splice(index, 1);
+  return folders;
+}
+
+// REMOVE FOLDER FUNCTION END
+
 // TRY CATCH BLOCK START
 
 try {
   console.log(move(18, 6));
   console.log(copy(18, 7));
   console.log(remove(17));
+  console.log(removeFolder(6));
 } catch (err) {
   console.log(err);
 }
